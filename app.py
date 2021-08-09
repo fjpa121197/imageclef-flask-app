@@ -1,6 +1,7 @@
 from flask import Flask, flash, request, redirect, url_for, render_template
 import urllib.request
 import os
+from flask.helpers import send_from_directory
 from werkzeug.utils import secure_filename
  
 app = Flask(__name__)
@@ -41,22 +42,12 @@ def upload_image():
         flash('Allowed image types are - png, jpg, jpeg')
         return redirect(request.url)
  
-# The image file will only be need for displaying the image after clicking submit button and using it for
-# prediction, then it can be deleted.
-@app.route('/image-delete/<filename>')
-def delete_image(filename):
-    """Function that deletes image upload by user, to be used within html file"""
-
-    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    # A return statement needs to be passed, if not, error thrown
-    return "ok"
-
 
 @app.route('/display/<filename>')
 def display_image(filename):
     """Function that display image upload by user, to be used within html file"""
     #print('display_image filename: ' + filename)
-    return redirect(url_for('temp', filename='uploads/' + filename), code=301)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
  
 if __name__ == "__main__":
     app.run()
