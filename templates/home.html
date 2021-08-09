@@ -1,56 +1,60 @@
-<html>
-<head>
-<title>Radiological Image Recommendation System</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />        
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-</head>
-<body>
-<p><h1 align="center">Radiological Image Recommendation System</h1></p>
-<div class="container">
-<div class="row">
-    <h2>Select a radiological image to upload</h2>
-    <p>
-        You can upload any radiological image, for example: Computed tomography (CT, CAT), Magnetic resonance,
-        Mammmography, X-raysm PET scans, ultrasound. The algorithm behind has been trained with the following
-        types of radiological images: INSERT LIST HERE
-       
-    </p>
-    <p>
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
-    </p>
+{% extends 'base.html' %}
 
-    {% if filename %}
-        <div>
-            <img src="{{ url_for('display_image', filename=filename) }}">
-        </div>
-    {% endif %}
+{% block content %}
+    <div class="container pt-5 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-11">
+                <h2 class="text-center">Select a radiological image to upload</h2>
+                <p>
+                    You can upload any radiological image, for example: Computed tomography (CT, CAT), Magnetic resonance,
+                    Mammmography, X-raysm PET scans, ultrasound. The algorithm behind has been trained with the following
+                    types of radiological images: INSERT LIST HERE
+                </p>
+            </div>
 
-    <form method="post" action="/" enctype="multipart/form-data">
-        <dl>
+
+        <div class="col-11 form">
             <p>
-                <input type="file" name="file" class="form-control" autocomplete="off" required>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
             </p>
-        </dl>
-        <p>
-            <input type="submit" value="Submit" class="btn btn-info">
-        </p>
+            <form method="post" action="/" enctype="multipart/form-data">
+                <dl>
+                    <div class='mb-3'>
+                        <label for="formFile" class="form-label">Upload image</label>
+                        <input type="file" name="file" class="form-control" autocomplete="off" required>
+                    </div>
+                </dl>
+                <p>
+                    <input type="submit" value="Submit" class="btn btn-info">
+                </p>
+            </form>
+        </div>
 
-<!--
-    {% if filename %}
-        <script src="{{ url_for('delete_image', filename=filename) }}"></script>
-    {% endif %}
--->
-
-
-</div>
-</div>
-</body>
-</html>
+        {% if filename %}
+            <div class="row justify-content-center results">
+                <div class='col-sm-5 col-11'>
+                    <img src="{{ url_for('display_image', filename=filename) }}">
+                </div>
+                <div class="col-sm-5 col-11 text-center my-auto">
+                    <span class="align-middle">
+                        <p>
+                            Results go HERE
+                        </p>
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+    <!--
+        {% if filename %}
+            <script src="{{ url_for('delete_image', filename=filename) }}"></script>
+        {% endif %}
+    -->
+{% endblock %}
