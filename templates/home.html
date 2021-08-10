@@ -14,22 +14,11 @@
 
 
         <div class="col-11 form">
-            <p>
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                {% endwith %}
-            </p>
             <form method="post" action="/" enctype="multipart/form-data">
                 <dl>
                     <div class='mb-3'>
                         <label for="formFile" class="form-label">Upload image</label>
-                        <input type="file" name="file" class="form-control" autocomplete="off" required>
+                        <input type="file" accept="image/*" style="width: 350px;" name="file" class="form-control" autocomplete="off" required>
                     </div>
                 </dl>
                 <p>
@@ -41,7 +30,7 @@
         {% if filename %}
             <div class="row justify-content-center results">
                 <div class='col-sm-5 col-11'>
-                    <img src="{{ url_for('display_image', filename=filename) }}">
+                    <img src="{{ url_for('display_image', filename=filename) }}" width="450" height="450">
                 </div>
                 <div class="col-sm-5 col-11 text-center my-auto">
                     <span class="align-middle">
@@ -52,5 +41,20 @@
                 </div>
             </div>
         {% endif %}
+           <p>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li><b>{{ message }}</b></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
+            </p>
+        {% if filename %}
+           <script src="{{ url_for('delete_image', filename=filename) }}"></script>
+        {% endif %}
+
         
 {% endblock %}
