@@ -36,7 +36,7 @@ def upload_image():
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #print('upload_image filename: ' + filename)
-        flash('Image successfully uploaded, bot images and predictions displayed below')
+        flash('Image successfully uploaded!')
         return render_template('home.html', filename=filename)
     else:
         flash('Allowed image types are - png, jpg, jpeg')
@@ -48,6 +48,12 @@ def display_image(filename):
     """Function that display image upload by user, to be used within html file"""
     #print('display_image filename: ' + filename)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/image_delete/<filename>')
+def delete_image(filename):
+
+    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return "ok"
  
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
