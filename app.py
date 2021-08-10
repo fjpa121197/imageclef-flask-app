@@ -3,6 +3,8 @@ import urllib.request
 import os
 from flask.helpers import send_from_directory
 from werkzeug.utils import secure_filename
+
+from recommender.recommender import Recommender
  
 app = Flask(__name__)
  
@@ -48,6 +50,18 @@ def display_image(filename):
     """Function that display image upload by user, to be used within html file"""
     #print('display_image filename: ' + filename)
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@app.route('/recommend_cuis/<filename>')
+def recommend_cuis(filename):
+
+    predicted_cuis = Recommender(filename).recommend_cuis()
+
+    print(predicted_cuis)
+    
+
+    return "ok"
+
 
 @app.route('/image_delete/<filename>')
 def delete_image(filename):
