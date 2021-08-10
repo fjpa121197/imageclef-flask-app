@@ -5,15 +5,39 @@ from .backend.aws_s3 import S3
 
 import pickle
 import os
+import pandas as pd
+import numpy as np
+
+# Download trained model (fitted k-nn) that is located in S3 bucket.
+# The trained model could be included within models directory by default but
+# It is bigger than suggest maximum object size by Github
 
 if os.path.exists(r'recommender\models\knn_model.pkl'):
     pass
 else:
     S3().download_object('knn_model.pkl', 
                          r'recommender\models\knn_model.pkl')
-
+                    
 with open(r'recommender\models\knn_model.pkl', 'rb') as f:
     MODEL = pickle.load(f)
+
+
+
+if os.path.exists(r'recommender\models\merged-train-val-concepts.csv'):
+    pass
+else:
+    S3().download_object('merged-train-val-concepts.csv', 
+                         r'recommender\models\merged-train-val-concepts.csv')
+
+TAGS_DB = pd.read_csv(r'recommender\models\merged-train-val-concepts.csv', names=['ImageId', 'Tags'], sep='\t')
+
+if os.path.exists(r'recommender\models\train-val-images-features.npy'):
+    pass
+else:
+    S3().download_object('train-val-images-features.npy', 
+                         r'recommender\models\train-val-images-features.npy')
+
+FEATURES_DB = np.load(r'recommender\models\train-val-images-features.npy')
 
 
 class Recommender():
@@ -23,6 +47,9 @@ class Recommender():
         self.filename = filename
         self.preprocessed_image = Preprocessor().load_image(filename)
         self.image_feature_vector = []
+        self.db_images_tags = TAGS_DB
+        self.knn_model = MODEL
+        self.db_images_features = FEATURES_DB
 
     def _extract_features(self):
 
@@ -46,9 +73,16 @@ class Recommender():
         """
 
         self.image_feature_vector  = self._extract_features()
-        closest_image = MODEL.kneighbors([self.image_feature_vector], return_distance = True)
+        closest_image = self.knn_model.kneighbors([self.image_feature_vector], return_distance = True)
+ 
+        can = pd.DataFrame([['synpic'+str(int(self.db_images_features[closest_image[1][0][0]][0])),
+                             closest_image[0][0][0]]], columns=['ImageId','can_distance'])
+
+        candidate_image_tags = pd.merge(can, self.db_images_tags, on='ImageId')
         
-        return closest_image
+        candidate_tags = list(set(candidate_image_tags['Tags'][0].split(';')))
+
+        return candidate_tags
         
 
 

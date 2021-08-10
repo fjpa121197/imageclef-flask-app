@@ -3,11 +3,12 @@ import urllib.request
 import os
 from flask.helpers import send_from_directory
 from werkzeug.utils import secure_filename
+import umls_api
 
 from recommender.recommender import Recommender
  
 app = Flask(__name__)
- 
+
 UPLOAD_FOLDER = 'temp/uploads/'
 app.secret_key = 'pachispachis'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -56,9 +57,27 @@ def display_image(filename):
 def recommend_cuis(filename):
 
     predicted_cuis = Recommender(filename).recommend_cuis()
+    cuis_description = []
 
-    print(predicted_cuis)
-    
+    for concept in predicted_cuis:
+        resp = umls_api.API(api_key = '957ee32c-93a0-4151-83d2-ad19eee77242').get_cui(cui = concept)
+        cuis_description.append(resp['result']['name'])
+
+
+    return_data = {
+        "concepts": predicted_cuis,
+        "description_concepts": cuis_description
+    }
+
+    output_data = {
+        'header': {
+            'statusCode': 200
+        },
+        'body': return_data
+    }
+
+    print(output_data)
+
 
     return "ok"
 
