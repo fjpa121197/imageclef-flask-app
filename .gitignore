@@ -2,4 +2,5 @@ temp/
 git
 .vscode
 recommender/__pycache__/*
+recommender/backend/__pycache__/*
 recommender/models/*
