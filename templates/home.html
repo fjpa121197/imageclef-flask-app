@@ -11,37 +11,38 @@
                     types of radiological images: INSERT LIST HERE
                 </p>
             </div>
-
-
-        <div class="col-11 form">
-            <form method="post" action="/" enctype="multipart/form-data">
-                <dl>
-                    <div class='mb-3'>
-                        <label for="formFile" class="form-label">Upload image</label>
-                        <input type="file" accept="image/*" style="width: 350px;" name="file" class="form-control" autocomplete="off" required>
-                    </div>
-                </dl>
-                <p>
-                    <input type="submit" value="Submit" class="btn btn-info">
-                </p>
-            </form>
         </div>
 
-        {% if filename %}
-            <div class="row justify-content-center results">
-                <div class='col-sm-5 col-11'>
-                    <img src="{{ url_for('display_image', filename=filename) }}" width="450" height="450">
-                </div>
-                <div class="col-sm-5 col-11 text-center my-auto">
-                    <span class="align-middle">
-                        <p>
-                            Results go HERE
-                        </p>
-                    </span>
-                </div>
+        <div class="row justify-content-around">
+            <div class="col-lg-4 col-md-6 col-11 content-top form">
+                <form method="post" action="/" enctype="multipart/form-data">
+                    <dl>
+                        <div class='mb-3'>
+                            <label for="formFile" class="form-label">Upload image</label>
+                            <input type="file" accept="image/*" name="file" class="form-control" autocomplete="off" required>
+                        </div>
+                    </dl>
+                    <p>
+                        <input type="submit" value="Submit" class="btn btn-info">
+                    </p>
+                </form>
             </div>
+
+        {% if filename %}
+            <div class='col-lg-4 col-md-6 col-11 my-auto'>
+                <img src="{{ url_for('display_image', filename=filename) }}"  class="img-fluid" alt= "Uploaded radiological image" width="450" height="450">
+                <span class="align-middle">
+                    <p>
+                        Results go HERE
+                    </p>
+                </span>
+            </div>
+            <!-- <div class="col-sm-5 col-11 text-center my-auto">
+ 
+            </div> -->
+        </div>
         {% endif %}
-           <p>
+            <p>
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <ul>
@@ -53,8 +54,6 @@
                 {% endwith %}
             </p>
         {% if filename %}
-           <script src="{{ url_for('delete_image', filename=filename) }}"></script>
+            <script src="{{ url_for('delete_image', filename=filename) }}"></script>
         {% endif %}
-
-        
 {% endblock %}
