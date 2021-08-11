@@ -19,7 +19,14 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
      
- 
+
+def clean_results(output_data):
+    """ formula to clean output_data dictionary"""
+    results = []
+    for concept, desc in zip(output_data["body"]["concepts"], output_data["body"]["description_concepts"]):
+        results.append(f'{concept}: {desc}')
+    return results
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -40,11 +47,13 @@ def upload_image():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #print('upload_image filename: ' + filename)
         flash('Image successfully uploaded!')
-        return render_template('home.html', filename=filename)
+        """ run recommend_cuis and render_home with result variables"""
+        results = clean_results(recommend_cuis(filename))
+        return render_template('home.html', filename=filename, results=results)
     else:
         flash('Allowed image types are - png, jpg, jpeg')
         return redirect(request.url)
- 
+
 
 @app.route('/display/<filename>')
 def display_image(filename):
@@ -78,9 +87,7 @@ def recommend_cuis(filename):
 
     print(output_data)
 
-
-    return "ok"
-
+    return output_data
 
 @app.route('/image_delete/<filename>')
 def delete_image(filename):
@@ -89,4 +96,4 @@ def delete_image(filename):
     return "ok"
  
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

@@ -14,7 +14,18 @@
         </div>
 
         <div class="row justify-content-around">
-            <div class="col-lg-4 col-md-6 col-11 content-top form">
+            <div class="col-lg-4 col-md-10 col-11 text-align-top form">
+                <p>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li><b>{{ message }}</b></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% endwith %}
+                </p>
                 <form method="post" action="/" enctype="multipart/form-data">
                     <dl>
                         <div class='mb-3'>
@@ -29,31 +40,26 @@
             </div>
 
         {% if filename %}
-            <div class='col-lg-4 col-md-6 col-11 my-auto'>
+            <div class='col-lg-4 col-md-5 col-11 my-auto'>
                 <img src="{{ url_for('display_image', filename=filename) }}"  class="img-fluid" alt= "Uploaded radiological image" width="450" height="450">
                 <span class="align-middle">
-                    <p>
-                        Results go HERE
-                    </p>
-                </span>
             </div>
-            <!-- <div class="col-sm-5 col-11 text-center my-auto">
- 
-            </div> -->
-        </div>
         {% endif %}
-            <p>
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <ul>
-                        {% for message in messages %}
-                            <li><b>{{ message }}</b></li>
-                        {% endfor %}
+
+            <div class="col-lg-4 col-md-5 col-11 pt-3 pb-3 my-auto">
+            {% if results %}
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-info text-dark">Results:</li>
+                    {% for item in results %}
+                        <li class="list-group-item">{{ item }}</li>
+                    {% endfor %}
                     </ul>
-                {% endif %}
-                {% endwith %}
-            </p>
-        {% if filename %}
-           <script src="{{ url_for('recommend_cuis', filename=filename) }}"></script>
-        {% endif %}
+            {% endif %}
+            </div>
+
+        </div>
+
+        <!-- {% if filename %}
+            <script src="{{ url_for('recommend_cuis', filename=filename) }}"></script>
+        {% endif %} -->
 {% endblock %}
