@@ -1,2 +1,4 @@
 temp/
 git
+venv/
+.DS_Store
