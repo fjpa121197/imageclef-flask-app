@@ -87,14 +87,14 @@ def recommend_cuis(filename):
         output_data = {
         'header': {
             'statusCode': 200
-        },
+            },
         'body': return_data
         }
         return output_data
     except:
         logging.error('Recommendation error', exc_info=True)
 
-    return output_data
+        return "Error"
 
 @app.route('/image_delete/<filename>')
 def delete_image(filename):
