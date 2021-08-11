@@ -4,7 +4,7 @@ import os
 from flask.helpers import send_from_directory
 from werkzeug.utils import secure_filename
 import umls_api
-
+import logging
 from recommender.recommender import Recommender
  
 app = Flask(__name__)
@@ -65,27 +65,34 @@ def display_image(filename):
 @app.route('/recommend_cuis/<filename>')
 def recommend_cuis(filename):
 
-    predicted_cuis = Recommender(filename).recommend_cuis()
-    cuis_description = []
+    try:
+        predicted_cuis = Recommender(filename).recommend_cuis()
+        logging.warning('Concepts for image %s predicted succesfully' %filename)
+        cuis_description = []
 
-    for concept in predicted_cuis:
-        resp = umls_api.API(api_key = '957ee32c-93a0-4151-83d2-ad19eee77242').get_cui(cui = concept)
-        cuis_description.append(resp['result']['name'])
-
-
-    return_data = {
+        for concept in predicted_cuis:
+            try:
+                resp = umls_api.API(api_key = '957ee32c-93a0-4151-83d2-ad19eee77242').get_cui(cui = concept)
+                cuis_description.append(resp['result']['name'])
+            except:
+                logging.warning('UMLS API is unavailable for concept: %s' %concept)
+     
+        return_data = {
         "concepts": predicted_cuis,
         "description_concepts": cuis_description
-    }
+        }
 
-    output_data = {
+        print(return_data)
+
+        output_data = {
         'header': {
             'statusCode': 200
         },
         'body': return_data
-    }
-
-    print(output_data)
+        }
+        return output_data
+    except:
+        logging.error('Recommendation error', exc_info=True)
 
     return output_data
 
@@ -96,4 +103,8 @@ def delete_image(filename):
     return "ok"
  
 if __name__ == "__main__":
-    app.run()
+    logging.basicConfig(
+                    format='%(asctime)s %(msecs)d-%(levelname)s - %(message)s', 
+                    datefmt='%d-%b-%y %H:%M:%S %p' ,
+                    level=logging.INFO)
+    app.run(debug=True)

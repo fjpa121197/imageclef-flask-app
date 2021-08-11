@@ -7,6 +7,7 @@ import pickle
 import os
 import pandas as pd
 import numpy as np
+import logging
 
 # Download trained model (fitted k-nn) that is located in S3 bucket.
 # The trained model could be included within models directory by default but
@@ -71,18 +72,29 @@ class Recommender():
 
         Returns: 1-d list of concepts. Example: ['C0019239', 'C1023566',...]
         """
+        try:
+            self.image_feature_vector  = self._extract_features()
+        except:
+            logging.error('Error during image feature extraction')
 
-        self.image_feature_vector  = self._extract_features()
-        closest_image = self.knn_model.kneighbors([self.image_feature_vector], return_distance = True)
- 
-        can = pd.DataFrame([['synpic'+str(int(self.db_images_features[closest_image[1][0][0]][0])),
-                             closest_image[0][0][0]]], columns=['ImageId','can_distance'])
+        try:
+            closest_image = self.knn_model.kneighbors([self.image_feature_vector], return_distance = True)
+    
+            can = pd.DataFrame([['synpic'+str(int(self.db_images_features[closest_image[1][0][0]][0])),
+                                closest_image[0][0][0]]], columns=['ImageId','can_distance'])
 
-        candidate_image_tags = pd.merge(can, self.db_images_tags, on='ImageId')
+            candidate_image_tags = pd.merge(can, self.db_images_tags, on='ImageId')
+            
+            candidate_tags = list(set(candidate_image_tags['Tags'][0].split(';')))
+
+            return candidate_tags
+
+        except:
+            logging.error('Error during concept selection (k-nn model)')
+
+
+
         
-        candidate_tags = list(set(candidate_image_tags['Tags'][0].split(';')))
-
-        return candidate_tags
         
 
 

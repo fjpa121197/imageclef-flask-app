@@ -1,6 +1,7 @@
 import tensorflow as tf
 from .backend.aws_s3 import S3
 import os
+import logging
 
 # Download trained model (feature extractor) that is located in S3 bucket.
 # The trained model could be included within models directory by default but
@@ -42,5 +43,5 @@ class FeatureExtractor():
         get_layer_output = self._define_layer_output()
         features = get_layer_output([self.preprocessed_image])[0]
         features = features.flatten()
-
+        
         return features

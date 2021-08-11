@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import os
+import logging
 
 
 class Preprocessor():
@@ -31,9 +32,13 @@ class Preprocessor():
     def load_image(self, filename):
         """Function that loads an image based on the file name, and transforms into a matrix"""
 
-        path_to_image = os.path.join(self.upload_folder, filename)
-        img = tf.keras.preprocessing.image.load_img(path = path_to_image, target_size = self.target_size)
-        img = tf.keras.preprocessing.image.img_to_array(img)
+
+        try:
+            path_to_image = os.path.join(self.upload_folder, filename)
+            img = tf.keras.preprocessing.image.load_img(path = path_to_image, target_size = self.target_size)
+            img = tf.keras.preprocessing.image.img_to_array(img)
+        except:
+            logging.error('Error during image loading')
 
         return self._transform_image(img)
 
