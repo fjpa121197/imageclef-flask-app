@@ -2,3 +2,7 @@ temp/
 git
 venv/
 .DS_Store
+.vscode
+recommender/__pycache__/*
+recommender/backend/__pycache__/*
+recommender/models/*

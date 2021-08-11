@@ -54,6 +54,6 @@
                 {% endwith %}
             </p>
         {% if filename %}
-            <script src="{{ url_for('delete_image', filename=filename) }}"></script>
+           <script src="{{ url_for('recommend_cuis', filename=filename) }}"></script>
         {% endif %}
 {% endblock %}
