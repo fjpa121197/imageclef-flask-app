@@ -32,13 +32,12 @@ class Preprocessor():
     def load_image(self, filename):
         """Function that loads an image based on the file name, and transforms into a matrix"""
 
-
         try:
             path_to_image = os.path.join(self.upload_folder, filename)
             img = tf.keras.preprocessing.image.load_img(path = path_to_image, target_size = self.target_size)
             img = tf.keras.preprocessing.image.img_to_array(img)
-        except:
-            logging.error('Error during image loading')
+        except Exception as e:
+            logging.error('Error during image loading: %s' %e)
 
         return self._transform_image(img)
 
