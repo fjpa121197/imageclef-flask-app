@@ -101,7 +101,7 @@ def delete_image(filename):
 
     os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return "ok"
- 
+
 if __name__ == "__main__":
     logging.basicConfig(
                     format='%(asctime)s %(msecs)d-%(levelname)s - %(message)s', 

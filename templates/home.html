@@ -39,24 +39,27 @@
                 </form>
             </div>
 
-        {% if filename %}
-            <div class='col-lg-4 col-md-5 col-11 my-auto'>
-                <img src="{{ url_for('display_image', filename=filename) }}"  class="img-fluid" alt= "Uploaded radiological image" width="450" height="450">
-                <span class="align-middle">
-            </div>
-        {% endif %}
-
-            <div class="col-lg-4 col-md-5 col-11 pt-3 pb-3 my-auto">
-            {% if results %}
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-info text-dark">Results:</li>
-                    {% for item in results %}
-                        <li class="list-group-item">{{ item }}</li>
-                    {% endfor %}
-                    </ul>
+            {% if filename %}
+                <div class='col-lg-4 col-md-5 col-11 my-auto'>
+                    <img src="{{ url_for('display_image', filename=filename) }}"  class="img-fluid" alt= "Uploaded radiological image" width="450" height="450">
+                    <span class="align-middle">
+                </div>
             {% endif %}
-            </div>
 
+                <div class="col-lg-4 col-md-5 col-11 pt-3 pb-3 justify-content-top">
+                {% if results %}
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-info text-dark">
+                            Results:
+                            <a href="{{ url_for('home') }}">
+                            <button type="button" value="clear" class="btn-close btn-close float-end" aria-label="Close"></button></a>
+                        </li>
+                        {% for item in results %}
+                            <li class="list-group-item">{{ item }}</li>
+                        {% endfor %}
+                        </ul>
+                {% endif %}
+        </div>
         </div>
 
         <!-- {% if filename %}
