@@ -49,7 +49,7 @@ def upload_image():
         flash('Image successfully uploaded!')
         """ run recommend_cuis and render_home with result variables"""
         results = clean_results(recommend_cuis(filename))
-        return render_template('home.html', filename=filename, results=results)
+        return render_template('predict.html', filename=filename, results=results)
     else:
         flash('Allowed image types are - png, jpg, jpeg')
         return redirect(request.url)
