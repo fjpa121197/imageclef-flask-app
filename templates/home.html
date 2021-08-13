@@ -10,6 +10,9 @@
                     Mammmography, X-raysm PET scans, ultrasound. The algorithm behind has been trained with the following
                     types of radiological images: INSERT LIST HERE
                 </p>
+                <p class="text-center">
+                    <a href="{{url_for('challenge_description') }}" class="btn btn-info">Learn more about the challenge and how the recommender works</a>
+                </p>
             </div>
         </div>
 
@@ -42,4 +45,49 @@
 
             {% endblock %}
         </div>
+    </div>
+
+    <hr>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-11">
+            <h3 class="text-center">Test these examples!</h3>
+        </div>
+    </div>
+    <div class="d-flex flex-row align-content-between flex-wrap justify-content-around mt-4">
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_1.jpeg') }}" class="card-img-top" alt="Examples of radiological image">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_1.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_2.jpeg') }}" class="card-img-top" alt="Examples of radiological image">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_2.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_3.jpeg') }}" class="card-img-top" alt="Examples of radiological image" style="height: 15rem;">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_3.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_4.jpeg') }}" class="card-img-top" alt="Examples of radiological image" style="height: 15rem;">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_4.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_5.jpeg') }}" class="card-img-top" alt="Examples of radiological image" style="height: 15rem;">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_5.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

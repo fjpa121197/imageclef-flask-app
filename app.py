@@ -6,19 +6,21 @@ from werkzeug.utils import secure_filename
 import umls_api
 import logging
 from recommender.recommender import Recommender
- 
+
 app = Flask(__name__)
 
+EXAMPLE_FOLDER = 'static/img/'
 UPLOAD_FOLDER = 'temp/uploads/'
 app.secret_key = 'pachispachis'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['EXAMPLE_FOLDER'] = EXAMPLE_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
- 
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
- 
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-     
+
 
 def clean_results(output_data):
     """ formula to clean output_data dictionary"""
@@ -30,7 +32,7 @@ def clean_results(output_data):
 @app.route('/')
 def home():
     return render_template('home.html')
- 
+
 @app.route('/', methods=['POST'])
 def upload_image():
     """ Function that handles image upload"""
@@ -58,8 +60,12 @@ def upload_image():
 @app.route('/display/<filename>')
 def display_image(filename):
     """Function that display image upload by user, to be used within html file"""
-    #print('display_image filename: ' + filename)
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    print('display_image filename: ' + filename)
+    if filename.startswith('img_'):
+        return send_from_directory(app.config['EXAMPLE_FOLDER'], filename)
+    else:
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    # elif filename start with static
 
 
 @app.route('/recommend_cuis/<filename>')
@@ -76,7 +82,7 @@ def recommend_cuis(filename):
                 cuis_description.append(resp['result']['name'])
             except:
                 logging.warning('UMLS API is unavailable for concept: %s' %concept)
-     
+
         return_data = {
         "concepts": predicted_cuis,
         "description_concepts": cuis_description
@@ -96,11 +102,32 @@ def recommend_cuis(filename):
 
         return "Error"
 
+@app.route('/example/<filename>')
+def example(filename):
+    if filename.startswith('img_'):
+        full_path = f'static/img/{filename}'
+    # results = clean_results(recommend_cuis(full_path))
+    results = clean_results({
+        'header': {
+            'statusCode': 200
+            },
+        'body': {'concepts': ['C0411904', 'C1306645'], 'description_concepts': ['Radiography of elbow', 'Plain x-ray']}
+        })
+    return render_template('predict.html', filename=filename, results=results)
+
 @app.route('/image_delete/<filename>')
 def delete_image(filename):
 
-    os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    if filename.startswith('img_'):
+        pass
+    else:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
     return "ok"
+
+@app.route('/challenge_description')
+def challenge_description():
+    return render_template('challenge_description.html')
 
 if __name__ == "__main__":
     logging.basicConfig(
