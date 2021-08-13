@@ -37,7 +37,7 @@ class Preprocessor():
             img = tf.keras.preprocessing.image.load_img(path = path_to_image, target_size = self.target_size)
             img = tf.keras.preprocessing.image.img_to_array(img)
         except Exception as e:
-            logging.error('Error during image loading: %s' %e)
+            logging.error('Error during image loading, error message: %s' %e)
 
         return self._transform_image(img)
 

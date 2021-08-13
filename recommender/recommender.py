@@ -74,8 +74,8 @@ class Recommender():
         """
         try:
             self.image_feature_vector  = self._extract_features()
-        except:
-            logging.error('Error during image feature extraction')
+        except Exception as e:
+            logging.error('Error during image feature extraction, error message: %s' %e)
 
         try:
             closest_image = self.knn_model.kneighbors([self.image_feature_vector], return_distance = True)
@@ -89,8 +89,8 @@ class Recommender():
 
             return candidate_tags
 
-        except:
-            logging.error('Error during concept selection (k-nn model)')
+        except Exception as e:
+            logging.error('Error during concept selection (k-nn model), error message: %s' %e)
 
 
 
