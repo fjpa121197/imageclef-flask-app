@@ -4,11 +4,26 @@
     <div class="container pt-5 mt-5">
         <div class="row justify-content-center">
             <div class="col-11">
-                <h2 class="text-center">Select a radiological image to upload</h2>
-                <p>
-                    You can upload any radiological image, for example: Computed tomography (CT, CAT), Magnetic resonance,
-                    Mammmography, X-raysm PET scans, ultrasound. The algorithm behind has been trained with the following
-                    types of radiological images: INSERT LIST HERE
+                <!-- <h2 class="text-center">Feel free to upload any radiology image </h2> -->
+                <p style="font-size: 20px; text-align: center;">
+                    Interpreting medical images such as radiology images can be a time-consuming task that requires
+                    the expertise of professionals in the field, and ends up causing delays in the clinical diagnosis
+                    pipeline. Therefore, there is the need of having automatic methods that can approximately detect visual
+                    information and transform it into textual descriptions, in this case, medical concepts.
+                    
+                </p>
+                <p style="font-size: 20px; text-align: center;">
+                    This websites has the purpose to present the work submitted by the NLIP-Essex-ITESM team
+                    during ImageCLEFmed concept detection 2021 sub-task. It is worth mentioning that the following system
+                    got ranked 6th, and NLIP-Essex-ITESM team got 2nd place. 
+                
+                <p style="font-size: 20px; text-align: center;">
+                    <b> This website was primarily build for learning
+                        how to adapt a research model and make it available for end-users. The predicted concepts must not be taken
+                        as the sole truth.
+                    </b>
+                </p> 
+
                 </p>
                 <p class="text-center">
                     <a href="{{url_for('challenge_description') }}" class="btn btn-info">Learn more about the challenge and how the recommender works</a>
