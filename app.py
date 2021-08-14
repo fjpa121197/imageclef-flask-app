@@ -106,13 +106,18 @@ def recommend_cuis(filename):
 def example(filename):
     if filename.startswith('img_'):
         full_path = f'static/img/{filename}'
-    # results = clean_results(recommend_cuis(full_path))
+
+    results = clean_results(recommend_cuis(full_path))
+
+    """
     results = clean_results({
         'header': {
             'statusCode': 200
             },
         'body': {'concepts': ['C0411904', 'C1306645'], 'description_concepts': ['Radiography of elbow', 'Plain x-ray']}
         })
+
+    """
     return render_template('predict.html', filename=filename, results=results)
 
 @app.route('/image_delete/<filename>')
