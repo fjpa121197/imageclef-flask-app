@@ -44,7 +44,7 @@ FEATURES_DB = np.load(r'recommender\models\train-val-images-features.npy')
 class Recommender():
 
     def __init__(self, filename):
-
+        
         self.filename = filename
         self.preprocessed_image = Preprocessor().load_image(filename)
         self.image_feature_vector = []

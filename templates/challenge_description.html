@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container pt-5 mt-5 mb-4 text-center">
+    <h1>Description of the Challenge and Recommender</h1>
+    <p class="text-center">
+        <a href="{{ url_for('home')}}" class="btn btn-info">Try the Recommender</a>
+    </p>
+
+    <h2>Description of the Challenge</h2>
+    <p>
+        ImageCLEFmed concept detection 2021 sub-task is part of the ImageCLEFmed Caption task that aims to research and propose methodologies for automatic image captioning, with the purpose to speed up the process of interpreting and summarizing the insights gained from medical image such as radiology images.
+    </p>
+    <p>
+        You can find more about ImageCLEF 2021 results, and the different research tasks that were available for people to participate <a href="https://www.google.com/url?q=https://www.imageclef.org/2021&sa=D&source=editors&ust=1628868772789486&usg=AOvVaw3E0oWiWCXaR113r6gn1yHc">here</a>.
+    </p>
+
+    <h2>Description of the Content Based Image Retrieval System</h2>
+
+    <p>
+        Content based image retrieval (CBIR), also known as query by image content, consists in the application of computer vision techniques to solve problems that involve searching images in databases. As the name suggests, the search analyzes the contents of the image instead of focusing on the metadata, focusing on particular aspects of the image such as colors, shapes, textures or any other information that might be derived from it. This alleviates the problem of relying on annotation techniques and quality for images that might be hard to find annotated.
+    </p>
+    <p>
+        The following picture gives an overview of how CBIR works, and it is worth mentioning that within a CBIR system, there are two main components: Feature Extraction and Similarity Measure. Feature Extraction, when it comes to images, consists in applying techniques that are able to process images and extract meaningful features from images such as shapes, colors, textures, etc. Similarity Measure consists in performing a comparison of your query image and the images in the database, this comparison can be done by comparing the distance between the features. Once you have a set of most similar images, it comes to deciding what will be recommended to the user, it can be that you are trying to predict the type of flower that is on the query image.
+    </p>
+    <img class="img-fluid" src="{{ url_for('static',filename='img/cbir.jpeg') }}" alt="Diagram of Content Based Image Retrieval">
+</div>
+{% endblock %}
