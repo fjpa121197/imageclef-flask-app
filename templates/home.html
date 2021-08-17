@@ -4,30 +4,11 @@
     <div class="container pt-5 mt-5">
         <div class="row justify-content-center">
             <div class="col-11">
-                <!-- <h2 class="text-center">Feel free to upload any radiology image </h2> -->
                 <p style="font-size: 20px; text-align: center;">
-                    Interpreting medical images such as radiology images can be a time-consuming task that requires
-                    the expertise of professionals in the field, and ends up causing delays in the clinical diagnosis
-                    pipeline. Therefore, there is the need of having automatic methods that can approximately detect visual
-                    information and transform it into textual descriptions, in this case, medical concepts.
-                    
-                </p>
-                <p style="font-size: 20px; text-align: center;">
-                    This websites has the purpose to present the work submitted by the NLIP-Essex-ITESM team
-                    during ImageCLEFmed concept detection 2021 sub-task. It is worth mentioning that the following system
-                    got ranked 6th, and NLIP-Essex-ITESM team got 2nd place. 
-                
-                <p style="font-size: 20px; text-align: center;">
-                    <b> This website was primarily build for learning
-                        how to adapt a research model and make it available for end-users. The predicted concepts must not be taken
-                        as the sole truth.
-                    </b>
-                </p> 
+                    Feel free to upload a radiology image, for example: X-ray, CT (computed tomography), MRI
+                    (magnetic resonance imaging), mammogram or ultrasound.
 
-                </p>
-                <p class="text-center">
-                    <a href="{{url_for('challenge_description') }}" class="btn btn-info">Learn more about the challenge and how the recommender works</a>
-                </p>
+                </p>      
             </div>
         </div>
 
@@ -60,12 +41,28 @@
 
             {% endblock %}
         </div>
+        <br>
+        <br>
+        <div class="row justify-content-center">
+            <p style="font-size: 20px; text-align: center;">
+                This websites has the purpose to present the work submitted by the NLIP-Essex-ITESM team
+                during ImageCLEFmed concept detection 2021 sub-task. It is worth mentioning that the following system
+                got ranked 6th, and NLIP-Essex-ITESM team got 2nd place. 
+
+            </p>
+            <br>
+            <p class="text-center">
+                <a href="{{url_for('challenge_description') }}" class="btn btn-info">Learn more about the challenge and how the recommender works</a>
+            </p>
+        </div>
     </div>
+    <br>
 
     <hr>
     <div class="row mt-3 justify-content-center">
         <div class="col-11">
-            <h3 class="text-center">Test these examples!</h3>
+            <h3 style="font-size: 25px;" class="text-center">Don't got any radiology image of your own? </h3>
+            <h3 style="font-size: 25px;" class="text-center">Feel free to use these ones</h3>
         </div>
     </div>
     <div class="d-flex flex-row align-content-between flex-wrap justify-content-around mt-4">
