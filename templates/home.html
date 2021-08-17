@@ -4,12 +4,11 @@
     <div class="container pt-5 mt-5">
         <div class="row justify-content-center">
             <div class="col-11">
-                <h2 class="text-center">Select a radiological image to upload</h2>
-                <p>
-                    You can upload any radiological image, for example: Computed tomography (CT, CAT), Magnetic resonance,
-                    Mammmography, X-raysm PET scans, ultrasound. The algorithm behind has been trained with the following
-                    types of radiological images: INSERT LIST HERE
-                </p>
+                <p style="font-size: 20px; text-align: center;">
+                    Feel free to upload a radiology image, for example: X-ray, CT (computed tomography), MRI
+                    (magnetic resonance imaging), mammogram or ultrasound.
+
+                </p>      
             </div>
         </div>
 
@@ -38,28 +37,69 @@
                     </p>
                 </form>
             </div>
+            {% block results %}
 
-        {% if filename %}
-            <div class='col-lg-4 col-md-5 col-11 my-auto'>
-                <img src="{{ url_for('display_image', filename=filename) }}"  class="img-fluid" alt= "Uploaded radiological image" width="450" height="450">
-                <span class="align-middle">
-            </div>
-        {% endif %}
-
-            <div class="col-lg-4 col-md-5 col-11 pt-3 pb-3 my-auto">
-            {% if results %}
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-info text-dark">Results:</li>
-                    {% for item in results %}
-                        <li class="list-group-item">{{ item }}</li>
-                    {% endfor %}
-                    </ul>
-            {% endif %}
-            </div>
-
+            {% endblock %}
         </div>
+        <br>
+        <br>
+        <div class="row justify-content-center">
+            <p style="font-size: 20px; text-align: center;">
+                This websites has the purpose to present the work submitted by the NLIP-Essex-ITESM team
+                during ImageCLEFmed concept detection 2021 sub-task. It is worth mentioning that the following system
+                got ranked 6th, and NLIP-Essex-ITESM team got 2nd place. 
 
-        <!-- {% if filename %}
-            <script src="{{ url_for('recommend_cuis', filename=filename) }}"></script>
-        {% endif %} -->
+            </p>
+            <br>
+            <p class="text-center">
+                <a href="{{url_for('challenge_description') }}" class="btn btn-info">Learn more about the challenge and how the recommender works</a>
+            </p>
+        </div>
+    </div>
+    <br>
+
+    <hr>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-11">
+            <h3 style="font-size: 25px;" class="text-center">Don't got any radiology image of your own? </h3>
+            <h3 style="font-size: 25px;" class="text-center">Feel free to use these ones</h3>
+        </div>
+    </div>
+    <div class="d-flex flex-row align-content-between flex-wrap justify-content-around mt-4">
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_1.jpeg') }}" class="card-img-top" alt="Examples of radiological image">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_1.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_2.jpeg') }}" class="card-img-top" alt="Examples of radiological image">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_2.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_3.jpeg') }}" class="card-img-top" alt="Examples of radiological image" style="height: 15rem;">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_3.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_4.jpeg') }}" class="card-img-top" alt="Examples of radiological image" style="height: 15rem;">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_4.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+        <div class="card my-2" style="width: 15rem;">
+            <img src="{{ url_for('static',filename='img/img_5.jpeg') }}" class="card-img-top" alt="Examples of radiological image" style="height: 15rem;">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <a href="{{ url_for('example',filename='img_5.jpeg' ) }}" class="btn btn-primary">Test this image!</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
