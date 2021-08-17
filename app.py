@@ -29,6 +29,10 @@ def clean_results(output_data):
         results.append(f'{concept}: {desc}')
     return results
 
+@app.route('/health_check')
+def health_check():
+    return 'ok'
+    
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -75,7 +79,8 @@ def recommend_cuis(filename):
         predicted_cuis = Recommender(filename).recommend_cuis()
         logging.warning('Concepts for image %s predicted succesfully' %filename)
         cuis_description = []
-
+        # TODO: Check time that takes to consult UMLS API compared to time that takes to recommend cuis
+        # TODO: Consider consulting CUIs description before and save in separate file
         for concept in predicted_cuis:
             try:
                 resp = umls_api.API(api_key = '957ee32c-93a0-4151-83d2-ad19eee77242').get_cui(cui = concept)
@@ -139,4 +144,4 @@ if __name__ == "__main__":
                     format='%(asctime)s %(msecs)d-%(levelname)s - %(message)s', 
                     datefmt='%d-%b-%y %H:%M:%S %p' ,
                     level=logging.INFO)
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port = 80,debug = True)
