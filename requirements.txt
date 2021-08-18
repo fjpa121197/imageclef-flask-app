@@ -11,5 +11,4 @@ scikit-learn==0.22.2.post1
 scipy==1.4.1
 tensorflow==2.3.0
 termcolor==1.1.0
-umls-api==0.1.0
 urllib3==1.26.6

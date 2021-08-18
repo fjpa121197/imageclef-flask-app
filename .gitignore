@@ -6,4 +6,3 @@ venv/
 recommender/__pycache__/*
 recommender/backend/__pycache__/*
 recommender/models/*
-tests/__pycache__/*
