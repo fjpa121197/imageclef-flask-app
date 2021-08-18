@@ -74,7 +74,7 @@ def display_image(filename):
     if filename.startswith('img_'):
         return send_from_directory(app.config['EXAMPLE_FOLDER'], filename)
     else:
-        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+        return send_from_directory(app.config['UPLOAD_FOLDER'], secure_filename(filename))
     # elif filename start with static
 
 
@@ -138,12 +138,12 @@ def example(filename):
 
 @app.route('/image_delete/<filename>')
 def delete_image(filename):
-
+    
     if filename.startswith('img_'):
         pass
     else:
-        sleep(0.2)
-        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        sleep(0.2)  
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(filename)))
 
     return "ok"
 
