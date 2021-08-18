@@ -138,10 +138,11 @@ def example(filename):
 
 @app.route('/image_delete/<filename>')
 def delete_image(filename):
-    sleep(0.2)
+    
     if filename.startswith('img_'):
         pass
-    else:  
+    else:
+        sleep(0.2)  
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(filename)))
 
     return "ok"
