@@ -170,4 +170,4 @@ if __name__ == "__main__":
     with open('recommender\models\concepts-description-2020-2021-images.json','r') as json_file:
         CUIS_DESC = json.load(json_file)
         
-    app.run(host='0.0.0.0',port = 80,debug = True)
+    app.run(host='0.0.0.0',port = 80)
